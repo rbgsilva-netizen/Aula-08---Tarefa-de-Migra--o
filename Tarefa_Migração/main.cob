@@ -1,0 +1,40 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. SISTEMA-ALUNOS.
+
+       ENVIRONMENT DIVISION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       77 NUM-ALUNOS      PIC 9 VALUE 5.
+       77 I               PIC 9 VALUE 1.
+       01 NOME-ALUNO-TEXT.
+          05 NOME-ALUNO    OCCURS 5 TIMES PIC X(20).
+       01 NOTAS-ALUNO       OCCURS 5 TIMES PIC 99V99.
+       77 TOTAL-NOTAS      PIC 99V99 VALUE 0.
+       77 MEDIA-ALUNOS     PIC 99V99 VALUE 0.
+
+       PROCEDURE DIVISION.
+       MAIN-PARAGRAPH.
+           DISPLAY "=== SISTEMA DE CADASTRO DE ALUNOS ===".
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > NUM-ALUNOS
+               DISPLAY "Digite o nome do aluno " I ": "
+               ACCEPT NOME-ALUNO(I)
+               DISPLAY "Digite a nota de " NOME-ALUNO(I) ": "
+               ACCEPT NOTAS-ALUNO(I)
+               ADD NOTAS-ALUNO(I) TO TOTAL-NOTAS
+           END-PERFORM
+
+           PERFORM CALCULA-MEDIA
+
+           DISPLAY "=== LISTA DE ALUNOS ==="
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > NUM-ALUNOS
+               DISPLAY NOME-ALUNO(I) " | Nota: " NOTAS-ALUNO(I)
+           END-PERFORM
+
+           DISPLAY "Média da turma: " MEDIA-ALUNOS
+           STOP RUN.
+
+       CALCULA-MEDIA.
+           DIVIDE TOTAL-NOTAS BY NUM-ALUNOS GIVING MEDIA-ALUNOS.
+           EXIT.
